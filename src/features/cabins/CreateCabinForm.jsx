@@ -8,28 +8,28 @@ import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 
 import { useCreateCabin } from "./useCreateCabin";
-import { useEditCabin } from "./useEditCabin";
+import { useUpdateCabin } from "./useUpdateCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
-  const { id: editId, ...editValues } = cabinToEdit;
+function CreateCabinForm({ cabinToUpdate = {} }) {
+  const { id: updateId, ...updateValues } = cabinToUpdate;
 
-  const isEditSession = Boolean(editId);
+  const isUpdateSession = Boolean(updateId);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditSession ? editValues : {},
+    defaultValues: isUpdateSession ? updateValues : {},
   });
   const { errors } = formState;
 
   const { isCreating, createCabin } = useCreateCabin();
-  const { isEditing, editCabin } = useEditCabin();
-  const isWorking = isCreating || isEditing;
+  const { isUpdating, updateCabin } = useUpdateCabin();
+  const isWorking = isCreating || isUpdating;
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditSession)
-      editCabin(
-        { newCabinData: { ...data, image }, id: editId },
+    if (isUpdateSession)
+      updateCabin(
+        { newCabinData: { ...data, image }, id: updateId },
         { onSuccess: (data) => reset() }
       );
     else
@@ -122,7 +122,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           type="file"
           disabled={isWorking}
           {...register("image", {
-            required: isEditSession ? false : "This field is required",
+            required: isUpdateSession ? false : "This field is required",
           })}
         />
       </FormRow>
@@ -133,7 +133,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           Cancel
         </Button>
         <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Create new cabin"}
+          {isUpdateSession ? "Edit cabin" : "Create new cabin"}
         </Button>
       </FormRow>
     </Form>
