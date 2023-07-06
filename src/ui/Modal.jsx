@@ -81,6 +81,7 @@ function Window({ children, name }) {
 
   if (name !== openName) return null;
 
+  // Overlay - onClick(close)
   return createPortal(
     <Overlay>
       <StyledModal ref={ref}>
