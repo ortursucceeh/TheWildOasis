@@ -50,6 +50,7 @@ function SignupForm() {
           type="password"
           id="password"
           disabled={isLoading}
+          autoComplete="on"
           {...register("password", {
             required: "This field is required",
             minLength: {
@@ -65,6 +66,7 @@ function SignupForm() {
           type="password"
           id="passwordConfirm"
           disabled={isLoading}
+          autoComplete="on"
           {...register("passwordConfirm", {
             required: "This field is required",
             validate: (value) =>
